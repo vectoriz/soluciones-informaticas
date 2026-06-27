@@ -80,29 +80,10 @@
             white-space: nowrap;
         }
 
-        /* ===== BOTÓN: estilo nativo del sistema (sin efectos) ===== */
-        .boton-no-entre {
-            /* Sin estilos personalizados, solo el mínimo para que sea clickeable */
-            font: inherit;
-            cursor: none; /* para que herede el cursor del body (oculto) */
-            padding: 4px 12px;
-            border: 1px solid #888;
-            background: #eee;
-            color: #000;
-            border-radius: 0;
-            box-shadow: none;
-            text-transform: none;
-            letter-spacing: normal;
-        }
-        /* Eliminamos cualquier efecto hover/active/focus */
-        .boton-no-entre:hover,
-        .boton-no-entre:active,
-        .boton-no-entre:focus {
-            background: #eee;
-            border-color: #888;
-            box-shadow: none;
-            transform: none;
-            outline: none;
+        /* ===== BOTÓN: estilo nativo del sistema (sin ningún CSS adicional) ===== */
+        /* No se aplican estilos, solo el cursor hereda el none del body */
+        #botonNoEntre {
+            cursor: none; /* para que coincida con el cursor oculto del body */
         }
 
         /* ===== CURSOR PERSONALIZADO (siempre visible) ===== */
@@ -149,8 +130,8 @@
         <!-- TÍTULO (sin funcionalidad) -->
         <h1 class="titulo" id="titulo">Sitio en Construcción</h1>
 
-        <!-- BOTÓN simple de sistema -->
-        <button class="boton-no-entre" id="botonNoEntre">No entre</button>
+        <!-- BOTÓN nativo del sistema (sin estilos) -->
+        <button id="botonNoEntre">No entre</button>
     </div>
 
     <!-- ===== CURSOR PERSONALIZADO ===== -->
@@ -249,11 +230,14 @@
                 if (progreso < 1) {
                     animFrameId = requestAnimationFrame(frame);
                 } else {
+                    // FIN DE LA ANIMACIÓN: restaurar cursor y habilitar botón
                     cursor.style.transform = 'translate(-50%, -50%)';
                     cursor.style.left = mouseX + 'px';
                     cursor.style.top = mouseY + 'px';
                     cursor.style.opacity = '1';
                     animando = false;
+                    // Reactivar el botón
+                    boton.disabled = false;
                 }
             }
             animFrameId = requestAnimationFrame(frame);
@@ -263,6 +247,9 @@
             if (animando) return;
             if (animFrameId) cancelAnimationFrame(animFrameId);
 
+            // Deshabilitar el botón inmediatamente
+            boton.disabled = true;
+
             animando = true;
             const x = parseFloat(cursor.style.left) || mouseX;
             const y = parseFloat(cursor.style.top) || mouseY;
@@ -271,7 +258,7 @@
 
         // ===== EVENTO: al hacer clic (mousedown) en el botón =====
         boton.addEventListener('mousedown', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // evita que el botón tome foco o selección
             iniciarVuelo();
         });
 
