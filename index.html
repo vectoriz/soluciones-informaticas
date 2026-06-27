@@ -19,9 +19,10 @@
             align-items: center;
             justify-content: center;
             font-family: 'Arial', 'Helvetica', sans-serif;
-            cursor: none;
+            cursor: none; /* oculta el cursor del sistema */
             overflow: hidden;
             position: relative;
+            flex-direction: column;
         }
 
         /* ===== FONDO GRID TRON ===== */
@@ -56,28 +57,55 @@
                 radial-gradient(ellipse at 80% 50%, rgba(0, 200, 255, 0.05) 0%, transparent 60%);
         }
 
-        /* ===== TÍTULO MUCHO MÁS PEQUEÑO Y EN UNA SOLA LÍNEA ===== */
-        .titulo {
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .contenedor {
             position: relative;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* ===== TÍTULO (normal, sin eventos) ===== */
+        .titulo {
             color: #e0e8f0;
-            font-size: 2.2rem;      /* mucho más chico */
+            font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: 4px;
             font-family: 'Arial', 'Helvetica', sans-serif;
             text-transform: uppercase;
-            padding: 10px 20px;      /* padding reducido */
-            background: none;
-            backdrop-filter: none;
-            box-shadow: none;
-            border: none;
+            padding: 10px 20px;
             user-select: none;
-            transition: none;
-            text-shadow: none;
-            white-space: nowrap;     /* fuerza una sola línea */
+            white-space: nowrap;
         }
 
-        /* ===== CURSOR (29px, sin ningún efecto visual) ===== */
+        /* ===== BOTÓN: estilo nativo del sistema (sin efectos) ===== */
+        .boton-no-entre {
+            /* Sin estilos personalizados, solo el mínimo para que sea clickeable */
+            font: inherit;
+            cursor: none; /* para que herede el cursor del body (oculto) */
+            padding: 4px 12px;
+            border: 1px solid #888;
+            background: #eee;
+            color: #000;
+            border-radius: 0;
+            box-shadow: none;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        /* Eliminamos cualquier efecto hover/active/focus */
+        .boton-no-entre:hover,
+        .boton-no-entre:active,
+        .boton-no-entre:focus {
+            background: #eee;
+            border-color: #888;
+            box-shadow: none;
+            transform: none;
+            outline: none;
+        }
+
+        /* ===== CURSOR PERSONALIZADO (siempre visible) ===== */
         .cursor-personalizado {
             position: fixed;
             pointer-events: none;
@@ -100,7 +128,7 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
             .titulo {
-                font-size: 1.4rem;    /* aún más chico en móvil */
+                font-size: 1.4rem;
                 letter-spacing: 2px;
                 padding: 6px 12px;
             }
@@ -116,10 +144,16 @@
     <!-- ===== FONDO TRON ===== -->
     <div id="fondo-tron"></div>
 
-    <!-- ===== TÍTULO (pequeño, una línea) ===== -->
-    <h1 class="titulo" id="titulo">Sitio en Construcción</h1>
+    <!-- ===== CONTENEDOR ===== -->
+    <div class="contenedor">
+        <!-- TÍTULO (sin funcionalidad) -->
+        <h1 class="titulo" id="titulo">Sitio en Construcción</h1>
 
-    <!-- ===== CURSOR ===== -->
+        <!-- BOTÓN simple de sistema -->
+        <button class="boton-no-entre" id="botonNoEntre">No entre</button>
+    </div>
+
+    <!-- ===== CURSOR PERSONALIZADO ===== -->
     <div class="cursor-personalizado" id="cursor">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 4 L26 22 L18 22 L22 28 L18 28 L14 22 L10 28 L6 28 Z"
@@ -130,7 +164,7 @@
     <script>
     (function() {
         const cursor = document.getElementById('cursor');
-        const titulo = document.getElementById('titulo');
+        const boton = document.getElementById('botonNoEntre');
 
         let animando = false;
         let mouseX = 0, mouseY = 0;
@@ -235,10 +269,13 @@
             animarVuelo(x, y);
         }
 
-        // Eventos
-        titulo.addEventListener('mouseenter', iniciarVuelo);
+        // ===== EVENTO: al hacer clic (mousedown) en el botón =====
+        boton.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            iniciarVuelo();
+        });
 
-        // Posición inicial
+        // Posición inicial del cursor
         setTimeout(() => {
             cursor.style.left = '50vw';
             cursor.style.top = '50vh';
