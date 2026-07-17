@@ -1,0 +1,155 @@
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #59D9D9; /* Aqua cristal */
+      color: #3A4650; /* Gris oscuro */
+      overflow: hidden;
+    }
+
+    /* Intro */
+    #intro {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+     /* text-decoration: none;*/
+    }
+
+    .intro-logo-title {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration:none;
+      text-decoration: none;
+    }
+
+    .logo-intro {
+      height: 100px;
+      width: auto;
+    }
+
+    #intro h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4em;
+      background: linear-gradient(90deg, #57ADC1, #9DD1DF, #CBECEF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 2s infinite alternate;
+      cursor: pointer;
+      text-decoration: none;
+      
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #57ADC1; }
+      to { text-shadow: 0 0 30px #CBECEF; }
+    }
+
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: #CBECEF;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #3A4650;
+      font-weight: bold;
+      
+    }
+    
+    a {
+      text-decoration: none;      
+    }
+
+    .consulta-btn {
+      background: #57ADC1;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5em;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+
+    .hero button {
+      margin: 10px;
+      padding: 10px 20px;
+      background: #57ADC1;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* Secciones */
+    section {
+      padding: 60px 20px;
+    }
+
+    .personalizados {
+      background: #9DD1DF;
+      text-align: center;
+    }
+
+    .sobre-mi {
+      text-align: center;
+      background: #CBECEF;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .galeria div {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .galeria div:hover .info {
+      opacity: 1;
+    }
+
+    .info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(87,173,193,0.9);
+      color: white;
+      padding: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
